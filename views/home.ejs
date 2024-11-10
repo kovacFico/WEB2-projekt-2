@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sigurnost</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="./normalize.css" />
+    <link rel="stylesheet" type="text/css" href="./main.css" />
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  </head>
+
+  <body>
+    <h1>Drugi projekt</h1>
+    <div class="container">
+        <div class="section">
+            <h2>SQL ubacivanje (SQL Injection)</h2>
+            <p>
+                <strong>Unesi ID narudžbe kako bi vidio detalje narudžbe prkladno opisane u jsonu</strong> 
+            </p>
+
+            <form action="/" method="post">
+                <input type="hidden" name="form_type" value="sql-inj-form">
+                <label for="enabled-vulnerability">
+                    <input class="checkbox" type="checkbox" name="vulnerability"> Ranjivost uključena
+                </label>
+                <br>
+                <label for="orderid">Order ID: 
+                    <input type="text" name="orderid" placeholder="Enter order">
+                </label>
+                
+                <button type="submit">Get</button>
+            </form>
+            
+            <% if (order !== undefined) { %>
+                <div class="order">
+                    <label>
+                        <h4>Order</h4>
+                        <textarea name="text" rows="4" cols="50"><%= order %></textarea>
+                    </label>
+                </div>
+            <% } %>
+
+            <% if (err_sql !== undefined) { %>
+                <div class="error-message">
+                    <span><%= err_sql %></span>
+                </div>
+            <% } %>
+            
+        </div>
+
+        <div class="section">
+            <h2>Loša autentifikacija (Broken Authentication)</h2>
+            <p>
+                <strong>Prijava korisnika u sustav</strong> 
+            </p>
+            <form id="loginForm" action="/" method="post">
+                <input type="hidden" name="form_type" value="broken-auth-form">
+                <label for="enabled-vulnerability">
+                    <input id="toggle-captcha" class="checkbox" type="checkbox" name="vulnerability"> Ranjivost uključena
+                </label>
+                <br>
+                <label for="username">User name: 
+                    <input type="text" name="user" placeholder="Enter user">
+                </label>
+                <label for="password">Password: 
+                    <input type="password" name="password" placeholder="••••">
+                </label>
+                <br>
+
+                <button type="submit">Login</button>
+
+                <% if (err_login !== undefined ) { %>
+                    <div class="error-message">
+                        <span><%= err_login %></span>
+                    </div>
+                <% } else if (msg_login !== undefined ) { %>
+                    <div class="msg-message">
+                        <span><%= msg_login %></span>
+                    </div>
+                <% } %>
+
+                <div class="g-recaptcha" data-sitekey="6LcNAnoqAAAAAEarl02pf2Tv2qi4vdOaBox0daV2"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const checkbox = document.getElementById('toggle-captcha');
+        const div = document.getElementsByClassName('g-recaptcha');
+
+        checkbox.addEventListener('change', function() {
+            if (checkbox.checked) {
+                div[0].remove(); 
+            }
+        });
+      </script>
+  </body>
+</html>
+
+
